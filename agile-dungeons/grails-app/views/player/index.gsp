@@ -50,11 +50,13 @@
   <div class="row">
     <div class="col-md-4">
         <label for="username">Mensaje</label>    
-        <g:textField class="form-control" name="message" placeholder="Ingrese su nombre de usuario..."/>
+        <g:textField class="form-control" name="message" id="message" placeholder="Ingrese su nombre de usuario..."/>
     </div>
     <div class="col-md-4">
-        <label for="username">Destinatario</label>    
-        <g:textField class="form-control" name="receiver" placeholder="Ingrese su nombre de usuario..."/>
+        <label for="username">Destinatario</label>
+        <g:select class="form-control" name='name' value="${name}"    
+            from='${characters}'
+            optionKey="name" optionValue="name"></g:select>
     </div>
     <div class="col-md-4">
         <label>&nbsp;</label><br>

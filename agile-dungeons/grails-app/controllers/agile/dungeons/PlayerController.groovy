@@ -12,7 +12,12 @@ class PlayerController {
         }
         [
             username: username,
-            characterName: player.character.name
+            characterName: player.character.name,
+            characters: characterService.list(),
         ]
+    }
+
+    def send(String message, String name) {
+        render "Try to send ${message} to ${name}"
     }
 }
