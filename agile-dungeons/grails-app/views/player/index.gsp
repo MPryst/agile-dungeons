@@ -44,23 +44,47 @@
   </div>   
 </div>
 <hr>
-<h4 class="display-4">Acciones</h4>
-<g:form controller="Player" action="send">
+<br>
+
+<h4 class="display-4">Mensajes recibidos</h4>
+<g:form controller="Player" action="message">
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
-        <label for="username">Mensaje</label>    
+    <div class="col-md-6">
+        <label for="username">Enviar mensaje</label>    
         <g:textField class="form-control" name="message" id="message" placeholder="Ingrese su nombre de usuario..."/>
     </div>
     <div class="col-md-4">
         <label for="username">Destinatario</label>
-        <g:select class="form-control" name='name' value="${name}"    
+        <g:select class="form-control" name='id' value="${id}"    
             from='${characters}'
-            optionKey="name" optionValue="name"></g:select>
+            optionKey="id" optionValue="name"></g:select>
+    </div>
+    <div class="col-md-2">
+        <label>&nbsp;</label><br>
+        <g:actionSubmit class="form-control" type="submit" class="btn btn-primary" value="message"/>
+    </div>
+  </div> 
+</div>  
+</g:form>
+<hr>
+<br>
+
+<h4 class="display-4">Pedir acción</h4>
+<g:form controller="Player" action="action">
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+        <label for="username">Accion</label>    
+        <g:textField class="form-control" name="actionMessage" id="actionMessage" placeholder="¿Qué quieres decirle al GM?"/>
     </div>
     <div class="col-md-4">
+        <label for="username">Destinatario</label>
+        <g:textField class="form-control" name="message" id="message" disabled="true" placeholder="Dungeon Master"/>
+    </div>
+    <div class="col-md-2">
         <label>&nbsp;</label><br>
-        <g:actionSubmit class="form-control" type="submit" class="btn btn-primary" value="send"/>
+        <g:actionSubmit class="form-control" type="submit" class="btn btn-primary" value="action"/>
     </div>
   </div> 
 </div>  
