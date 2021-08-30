@@ -3,8 +3,11 @@ package agile.dungeons
 class PlayerController {
 
     def characterService
-
-    def index(String username) {        
-        render "Personajes ${characterService.list(name: username).name} - Usuario logueado: ${session.username}"
+    def playerService
+    def index(String username) {
+        if (!playerService.list().find({p -> p.username == username})){
+            response.status = 404
+            render "Player not found"
+        }
     }
 }

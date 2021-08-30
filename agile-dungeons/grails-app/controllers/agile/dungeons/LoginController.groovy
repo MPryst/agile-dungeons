@@ -14,7 +14,7 @@ class LoginController {
         } else {
             session.rol = "Player"
             session.username = "${username}"            
-            redirect(controller: "player", action: "index")
+            redirect(controller: "player", action: "index", params: [username: username])
         }
      }
 }

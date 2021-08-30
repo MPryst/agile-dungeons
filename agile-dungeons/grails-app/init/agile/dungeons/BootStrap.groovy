@@ -1,7 +1,7 @@
 package agile.dungeons
 
 class BootStrap {
-
+    
     def init = { servletContext ->    
         Character tako = new Character(
             id: 1,
@@ -39,10 +39,10 @@ class BootStrap {
             perception: 10,)
         .save()
 
-        Player juli = new Player(name: "Juli", character: tako).save()
-        Player andres = new Player(name: "Andrés", character: logos).save()
-        Player matias = new Player(name: "Matias", character: cobalt).save()
-        Player caro = new Player(name: "Caro", character: neisseria).save()
+        Player juli = new Player(username: "Juli", character: tako).save()        
+        Player andres = new Player(username: "Andrés", character: logos).save()
+        Player matias = new Player(username: "Matias", character: cobalt).save()
+        Player caro = new Player(username: "Caro", character: neisseria).save()
     }
     def destroy = {
     }
