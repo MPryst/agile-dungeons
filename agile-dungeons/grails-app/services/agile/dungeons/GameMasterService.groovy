@@ -6,6 +6,7 @@ import grails.gorm.transactions.Transactional
 class GameMasterService {
 
     def messageService
+    def characterService
 
     def sendMessage(Character receptor, String message) {
         if (!message || !receptor){
@@ -20,5 +21,33 @@ class GameMasterService {
             content: message
         )
         messageService.save(newMessage)
+    }
+
+    def sendMessage(CharacterTypes charType, String message) {
+        if (!message || !charType){
+            throw new Exception("No se puede enviar el mensae. Datos invalidos.")
+        }
+        def charsInTheGroup
+        switch(charType){
+            case CharacterTypes.MEDIUM:
+                charsInTheGroup = characterService.list().findAll({c -> c.size == "Medium" && c.awake})
+                break;
+            case CharacterTypes.SMALL:
+                charsInTheGroup = characterService.list().findAll({c -> c.size == "Small" && c.awake})         
+                break;
+            case CharacterTypes.DARKVISION:
+                charsInTheGroup = characterService.list().findAll({c -> c.vision == "Darkvision" && c.awake})
+                break;
+            case CharacterTypes.REGULARVISION:
+                charsInTheGroup = characterService.list().findAll({c -> c.vision == "Regularvision" && c.awake})
+                break;
+            default :
+                throw new Exception("Seleccion de personajes inválida.")
+                brak;
+        }
+
+        charsInTheGroup.each {
+            sendMessage(it, message)
+        }        
     }
 }

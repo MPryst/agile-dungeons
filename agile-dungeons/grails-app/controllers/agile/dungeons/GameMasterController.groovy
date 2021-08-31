@@ -33,6 +33,7 @@ class GameMasterController {
      }
 
     def accept (String idMessage) {
+
         render "accept ${idMessage}"
      }
 
@@ -52,8 +53,13 @@ class GameMasterController {
     }
 
     def groupMessage(String message, String groupDescripion) {
-        def charType = CharacterTypes.values().find({x -> x.description == groupDescripion})        
-        render "Querés decirle '${message}' al grupo de tipo '${charType.getValue()}'"
+        try {
+            def charType = CharacterTypes.values().find({x -> x.description == groupDescripion})
+            gameMasterService.sendMessage(charType, message)
+            redirect(controller: "GameMaster", action: "index", params: [created: true])
+        }catch (Exception e) {
+            response.status = 400
+            render "${e.message}"
+        }
     }
-
 }

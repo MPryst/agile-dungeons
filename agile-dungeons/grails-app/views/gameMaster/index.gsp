@@ -57,6 +57,21 @@
 <hr>
 <br>
 
+<h4 class="display-4">Enviados</h4>
+<g:each in="${sentMessages}">
+<div class="row">
+    <div class="col-md-2">
+      <span style="color: green; font-weight:bold">GM →</span -><span style="color: blue; font-weight:bold"> ${it.receptor} </span>
+    </div>
+    <div class="col-md-9">
+      ${it.content}
+    </div>
+    <div class="col-md-1">
+    Aprobado     
+    </div>
+  </div>   
+</g:each>
+
 <h4 class="display-4">Enviar mensaje</h4>
 <g:form controller="gameMaster" action="message">
 <div class="container">
@@ -104,21 +119,6 @@
 </g:form>
 <hr>
 <br>
-
-<h4 class="display-4">Enviados</h4>
-<g:each in="${sentMessages}">
-<div class="row">
-    <div class="col-md-2">
-      <span style="color: green; font-weight:bold">GM →</span -><span style="color: blue; font-weight:bold"> ${it.receptor} </span>
-    </div>
-    <div class="col-md-9">
-      ${it.content}
-    </div>
-    <div class="col-md-1">
-    Aprobado     
-    </div>
-  </div>   
-</g:each>
 <hr>
 </body>
 </div>
