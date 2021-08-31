@@ -6,9 +6,13 @@ class GameMasterController {
     def messageService
 
     def message
-    def index() {
+    def sentMessages
+    def index(Boolean created) {
         message = messageService.list(sort:"date").find({m -> m.approved == null})
+        sentMessages = messageService.list().findAll({m -> m.emisor == null})
+
         [
+            created: created,
             username: session.username,            
             characters: characterService.list(),
             characterTypes: CharacterTypes.values(),
@@ -17,7 +21,12 @@ class GameMasterController {
                 receptor: message.receptor ? message.receptor.name : "GM",
                 content: message.content,
                 approved: message.approved == null ? "Pendiente..." : message.approved ? "Aprobado" : "Rechazado",
-            ]
+            ],
+            sentMessages: sentMessages.collect({m -> [                                
+                receptor: m.receptor?.name,
+                content: m.content,
+             ]
+            }),
         ]
 
      }
@@ -31,7 +40,21 @@ class GameMasterController {
     }
 
     def message(String message, String id) {
-        render "Querés decirle '${message}' al character de id '${id}'"
+        def receptorCharacter = characterService.get(id)
+        if (!message || !receptorCharacter){
+            response.status = 400
+            render "Bad request"
+        }
+
+        def newMessage = new Message(
+            date: new Date(),
+            emisor: null,
+            receptor: receptorCharacter,
+            approved: true,
+            content: message
+        )
+        messageService.save(newMessage)
+        redirect(controller: "GameMaster", action: "index", params: [created: true])        
     }
 
     def groupMessage(String message, String groupDescripion) {

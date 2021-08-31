@@ -17,7 +17,11 @@
 </nav>
 <p>Hola ${username}!</p>
 <p>Recordá que <strong>un gran poder conlleva una gran responsabilidad</strong></p>
-
+<g:if test="${created}">
+    <div class="alert alert-success" role="alert">
+    Nuevo mensaje creado
+    </div>
+</g:if>
 <h4 class="display-4">Peticiones</h4>
 <div class="container">
   <div class="row">
@@ -100,6 +104,21 @@
 </g:form>
 <hr>
 <br>
+
+<h4 class="display-4">Enviados</h4>
+<g:each in="${sentMessages}">
+<div class="row">
+    <div class="col-md-2">
+      <span style="color: green; font-weight:bold">GM →</span -><span style="color: blue; font-weight:bold"> ${it.receptor} </span>
+    </div>
+    <div class="col-md-9">
+      ${it.content}
+    </div>
+    <div class="col-md-1">
+    Aprobado     
+    </div>
+  </div>   
+</g:each>
 <hr>
 </body>
 </div>
