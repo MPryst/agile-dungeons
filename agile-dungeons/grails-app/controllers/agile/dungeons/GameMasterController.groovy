@@ -11,13 +11,13 @@ class GameMasterController {
     def index(Boolean created) {
         message = messageService.list(sort:"date").find({m -> m.approved == null})
         sentMessages = messageService.list().findAll({m -> m.emisor == null})
-
+    
         [
             created: created,
             username: session.username,            
             characters: characterService.list(),
             characterTypes: CharacterTypes.values(),
-            message: [
+            message: !message ? null : [
                 emisor: message.emisor ? message.emisor.name : "GM",
                 receptor: message.receptor ? message.receptor.name : "GM",
                 content: message.content,
@@ -32,14 +32,15 @@ class GameMasterController {
 
      }
 
-    def accept (String idMessage) {
-
-        render "accept ${idMessage}"
+    def accept () {        
+        gameMasterService.approve(message)
+        redirect(controller: "GameMaster", action: "index")
      }
 
-    def cancel (String idMessage) {
-        render "cancel ${idMessage}"
-    }
+    def cancel () {
+        gameMasterService.reject(message)
+        redirect(controller: "GameMaster", action: "index")
+    }    
 
     def message(String message, String id) {        
         try {

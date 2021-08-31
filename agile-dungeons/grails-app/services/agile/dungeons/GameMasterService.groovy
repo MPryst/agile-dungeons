@@ -50,4 +50,14 @@ class GameMasterService {
             sendMessage(it, message)
         }        
     }
+
+    def approve(Message message){
+        message.approved = true
+        messageService.save(message)
+    }
+
+    def reject(Message message){
+        message.approved = false
+        messageService.save(message)
+    }
 }
