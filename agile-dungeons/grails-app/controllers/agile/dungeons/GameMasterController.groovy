@@ -12,7 +12,12 @@ class GameMasterController {
             username: session.username,            
             characters: characterService.list(),
             characterTypes: CharacterTypes.values(),
-            message: message
+            message: [
+                emisor: message.emisor ? message.emisor.name : "GM",
+                receptor: message.receptor ? message.receptor.name : "GM",
+                content: message.content,
+                approved: message.approved == null ? "Pendiente..." : message.approved ? "Aprobado" : "Rechazado",
+            ]
         ]
 
      }

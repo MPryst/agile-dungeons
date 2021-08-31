@@ -23,7 +23,7 @@
 <g:each in="${messages}">
 <div class="row">
     <div class="col-md-2">
-      <span style="color: green; font-weight:bold">${it.emisor?.name} →</span -><span style="color: orange; font-weight:bold"> ${it.receptor?.name} </span>
+      <span style="color: green; font-weight:bold">${it.emisor} →</span -><span style="color: blue; font-weight:bold"> ${it.receptor} </span>
     </div>
     <div class="col-md-9">
       ${it.content}      
