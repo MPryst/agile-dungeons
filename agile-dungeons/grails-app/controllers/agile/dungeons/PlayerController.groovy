@@ -25,6 +25,7 @@ class PlayerController {
                 emisor: m.emisor ? m.emisor?.name : "GM",
                 receptor: m.receptor ? m.receptor?.name : "GM",
                 approved: m.approved == null ? "Pendiente..." : m.approved ? "Aprobado" : "Rechazado",
+                color: m.approved == null ? "orange" : m.approved ? "green" : "red",
                 content: m.content,
              ]
             }),

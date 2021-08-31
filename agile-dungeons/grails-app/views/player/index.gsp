@@ -29,7 +29,7 @@
       ${it.content}      
     </div>
     <div class="col-md-1">
-    ${it.approved}      
+    <span style="color: ${it.color}; font-weight:bold">${it.approved}</span>
     </div>
   </div>   
 </g:each>
