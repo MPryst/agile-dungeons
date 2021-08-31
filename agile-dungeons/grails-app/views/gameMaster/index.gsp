@@ -23,37 +23,40 @@
     </div>
 </g:if>
 <h4 class="display-4">Peticiones</h4>
-<div class="container">
-  <div class="row">
-    <div class="col-md-2">
+<g:if test="${message != null}">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-2">
       <span style="color: green; font-weight:bold">${message.emisor} →</span -><span style="color: orange; font-weight:bold"> ${message.receptor}</span>
-    </div>
-    <div class="col-md-9">
-      <q>${message.content}</q>
-    </div>
-    <div class="col-md-1">
-      ${message.approved}
-    </div>
-  </div>   
+        </div>
+        <div class="col-md-9">
+        <q>${message.content}</q>
+        </div>
+        <div class="col-md-1">
+        ${message.approved}
+        </div>
+    </div>  
+
   
-<div class="container">
-  <div class="row">        
-    <div class="col-md-2">
-        <g:form controller="gameMaster" action="accept">
-            <label>&nbsp;</label><br>
-            <g:actionSubmit type="submit" class="form-control btn btn-success" value="accept"/>
-            <g:textField class="form-control" name="idMessage" id="message" value="999Accept" hidden="true"/>
-        </g:form>
-    </div>      
-    <div class="col-md-2">
-        <g:form controller="gameMaster" action="cancel">
-            <label>&nbsp;</label><br>
-            <g:actionSubmit type="submit" class="form-control btn btn-danger" value="cancel"/>
-            <g:textField class="form-control" name="idMessage" id="message" value="999Cancel" hidden="true"/>
-        </g:form>
-    </div>      
- </div>     
-</div>
+    <div class="container">
+      <div class="row">        
+        <div class="col-md-2">
+            <g:form controller="gameMaster" action="accept">
+                <label>&nbsp;</label><br>
+                <g:actionSubmit type="submit" class="form-control btn btn-success" value="accept"/>
+                <g:textField class="form-control" name="idMessage" id="message" value="999Accept" hidden="true"/>
+            </g:form>
+        </div>      
+        <div class="col-md-2">
+            <g:form controller="gameMaster" action="cancel">
+                <label>&nbsp;</label><br>
+                <g:actionSubmit type="submit" class="form-control btn btn-danger" value="cancel"/>
+                <g:textField class="form-control" name="idMessage" id="message" value="999Cancel" hidden="true"/>
+            </g:form>
+        </div>      
+     </div>     
+    </div>
+</g:if> 
 <hr>
 <br>
 
