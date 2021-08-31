@@ -12,6 +12,10 @@ class PlayerMessagingService {
         def sourceCharacter = characterService.list().find({c -> c.id == sourceCharacterId})
         def destinationCharacter = characterService.list().find({c -> c.id == destinationCharacterId})
 
+        if (sourceCharacterId == destinationCharacterId){
+            throw new Exception("No te puedes mandar un mensaje a ti mismo.")
+        }
+
         if (!sourceCharacter.awake){
             throw new Exception("No se pueden enviar mensajes estando inconsciente.")
         }

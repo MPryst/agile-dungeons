@@ -11,7 +11,7 @@ class PlayerController {
     def messagesList
     def index(String username) {
         player = playerService.list().find({p -> p.username == username})
-        def chars = characterService.list()        
+        def chars = characterService.list().findAll({p -> p.id != player.character.id})        
         messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
         if (!player){
             response.status = 404
