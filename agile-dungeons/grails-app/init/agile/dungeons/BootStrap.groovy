@@ -25,7 +25,7 @@ class BootStrap {
             id: 3,
             name: "Logos",            
             size: "Medium",
-            vision: "Regular",
+            vision: "Regularvision",
             awake: false,
             perception: 11,)
         .save()
@@ -34,7 +34,7 @@ class BootStrap {
             id: 4,
             name: "Neisseria",            
             size: "Small",
-            vision: "Regular",
+            vision: "Regularvision",
             awake: true,
             perception: 10,)
         .save()

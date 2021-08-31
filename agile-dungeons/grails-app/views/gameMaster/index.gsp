@@ -87,9 +87,9 @@
     </div>
     <div class="col-md-4">
         <label for="username">Destinatario</label>
-        <g:select class="form-control" name='id' value="${id}"    
-            from='${characters}'
-            optionKey="id" optionValue="name"></g:select>
+        <g:select class="form-control" name='groupDescripion' value="${value}"    
+            from='${characterTypes}'
+            optionKey="${value}" optionValue="${value}"></g:select>
     </div>
     <div class="col-md-2">
         <label>&nbsp;</label><br>
