@@ -20,17 +20,19 @@
 
 <h4 class="display-4">Peticiones</h4>
 <div class="container">
+<g:each in="${message}">
   <div class="row">
     <div class="col-md-2">
-      <span style="color: green; font-weight:bold">Player 1 →</span -><span style="color: orange; font-weight:bold"> Player 2 </span>
+      <span style="color: green; font-weight:bold">${it.emisor.name} →</span -><span style="color: orange; font-weight:bold"> ${it.receptor?.name}</span>
     </div>
     <div class="col-md-9">
-      Cuidado a la derecha! Hay bandidos!!!
+      <q>${it.content}</q>
     </div>
     <div class="col-md-1">
-      Mensaje
+      Mensaje - ${it.approved}
     </div>
   </div> 
+  </g:each>
   
 <div class="container">
   <div class="row">        

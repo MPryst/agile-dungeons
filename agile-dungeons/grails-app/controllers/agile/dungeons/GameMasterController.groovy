@@ -3,12 +3,16 @@ package agile.dungeons
 class GameMasterController {
 
     def characterService
+    def messageService
 
+    def message
     def index() {
+        message = messageService.list(sort:"date").find({m -> m.approved == null})
         [
             username: session.username,            
             characters: characterService.list(),
             characterTypes: CharacterTypes.values(),
+            message: message
         ]
 
      }
@@ -29,6 +33,5 @@ class GameMasterController {
         def charType = CharacterTypes.values().find({x -> x.description == groupDescripion})
         render "Querés decirle '${message}' al grupo de tipo '${charType.getValue()}'"
     }
-
 
 }
