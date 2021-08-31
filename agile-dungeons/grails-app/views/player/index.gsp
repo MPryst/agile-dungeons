@@ -20,46 +20,49 @@
 
 <h4 class="display-4">Mensajes</h4>
 <div class="container">
-<g:each in="${messages}">
-<div class="row">
-    <div class="col-md-2">
-      <span style="color: green; font-weight:bold">${it.emisor} →</span -><span style="color: blue; font-weight:bold"> ${it.receptor} </span>
-    </div>
-    <div class="col-md-9">
-      ${it.content}      
-    </div>
-    <div class="col-md-1">
-    <span style="color: ${it.color}; font-weight:bold">${it.approved}</span>
-    </div>
-  </div>   
-</g:each>
-</div>
-<hr>
-<br>
-
-<h4 class="display-4">Enviar mensaje</h4>
-<g:form controller="Player" action="message">
-<div class="container">
+<g:if test="${awake == true}">
+  <g:each in="${messages}">
   <div class="row">
-    <div class="col-md-6">
-        <label for="username">Enviar mensaje</label>    
-        <g:textField class="form-control" name="message" id="message" placeholder="¿Qué quiere decirle?"/>
-    </div>
-    <div class="col-md-4">
-        <label for="username">Destinatario</label>
-        <g:select class="form-control" name='id' value="${id}"    
-            from='${characters}'
-            optionKey="id" optionValue="name"></g:select>
-    </div>
-    <div class="col-md-2">
-        <label>&nbsp;</label><br>
-        <g:actionSubmit class="form-control" type="submit" class="btn btn-primary" value="message"/>
-    </div>
-  </div> 
-</div>  
-</g:form>
-<hr>
-<br>
+      <div class="col-md-2">
+        <span style="color: green; font-weight:bold">${it.emisor} →</span -><span style="color: blue; font-weight:bold"> ${it.receptor} </span>
+      </div>
+      <div class="col-md-9">
+        ${it.content}      
+      </div>
+      <div class="col-md-1">
+      <span style="color: ${it.color}; font-weight:bold">${it.approved}</span>
+      </div>
+    </div>   
+  </g:each>
+
+  </div>
+  <hr>
+  <br>
+
+  <h4 class="display-4">Enviar mensaje</h4>
+  <g:form controller="Player" action="message">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+          <label for="username">Enviar mensaje</label>    
+          <g:textField class="form-control" name="message" id="message" placeholder="¿Qué quiere decirle?"/>
+      </div>
+      <div class="col-md-4">
+          <label for="username">Destinatario</label>
+          <g:select class="form-control" name='id' value="${id}"    
+              from='${characters}'
+              optionKey="id" optionValue="name"></g:select>
+      </div>
+      <div class="col-md-2">
+          <label>&nbsp;</label><br>
+          <g:actionSubmit class="form-control" type="submit" class="btn btn-primary" value="message"/>
+      </div>
+    </div> 
+  </div>  
+  </g:form>
+  <hr>
+  <br>
+</g:if>
 
 <h4 class="display-4">Pedir acción</h4>
 <g:form controller="Player" action="action">

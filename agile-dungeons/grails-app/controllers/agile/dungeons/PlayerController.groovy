@@ -13,13 +13,16 @@ class PlayerController {
         player = playerService.list().find({p -> p.username == username})
         def chars = characterService.list().findAll({p -> p.id != player.character.id})        
         messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
+        
         if (!player){
             response.status = 404
             render "Jugador no encontrado"
         }
+        
         [
             username: username,
             characterName: player.character.name,
+            awake: player.character.awake,
             characters: chars,
             messages: messagesList.collect({m -> [
                 id: m.id,
@@ -27,7 +30,7 @@ class PlayerController {
                 receptor: m.receptor ? m.receptor?.name : "GM",
                 approved: m.approved == null ? "Pendiente..." : m.approved ? "Aprobado" : "Rechazado",
                 color: m.approved == null ? "orange" : m.approved ? "green" : "red",
-                content: m.content,
+                content: m.content,                
              ]
             }),
         ]
