@@ -27,9 +27,7 @@ class PlayerMessagingService {
         if (messageService.list().find({m -> m.approved == null && m.emisor != null && m.emisor.id == sourceCharacterId})) {
             throw new Exception("No se puede enviar un mensaje nuevo mientras tengas alguno pendiente...")
         }    
-        if (!canSendMessage(sourceCharacterId)) {
-            throw new Exception("Todavía no estás habilitado para enviar otro mensaje. Debes esperar.")
-        }              
+        validateMessage(sourceCharacterId, message)            
 
         def newMessage = new Message(
             date: new Date(),
@@ -52,9 +50,7 @@ class PlayerMessagingService {
             throw new Exception("No se puede enviar un mensaje nuevo mientras tengas alguno pendiente...")
         }
 
-        if (!canSendMessage(sourceCharacterId)){
-            throw new Exception("Todavía no estás habilitado para enviar otro mensaje. Debes esperar.")
-        }
+        validateMessage(sourceCharacterId, message)        
 
         def newMessage = new Message(
             date: new Date(),
@@ -66,7 +62,7 @@ class PlayerMessagingService {
         messageService.save(newMessage)
     }
 
-    def canSendMessage(Long sourceCharacterId){
+    def validateMessage(Long sourceCharacterId, String message){
         def latests = messageService.list().findAll({m -> m.emisor != null && m.emisor.id == sourceCharacterId}).sort{it.date}
         latests.reverse(true)        
         
@@ -76,12 +72,15 @@ class PlayerMessagingService {
                 new Date(),
                 latestSent
             );
+
+            if (latests[0].content == message && !latests[0].approved){
+                throw new Exception("No se puede enviar consecutivamente el mensaje rechazado: ${message}");
+            }
             
             if (duration.days == 0 && duration.hours ==0 && duration.minutes == 0 && duration.seconds < SECONDS_BEFORE_ANOTHER_MESSAGE){
-                println "There's only been: ${duration.days}d ${duration.hours}h ${duration.minutes}m ${duration.seconds}s after the last message."
-                return false
+                throw new Exception("Todavía no estás habilitado para enviar otro mensaje. Debes esperar.")
+                println "There's only been: ${duration.days}d ${duration.hours}h ${duration.minutes}m ${duration.seconds}s after the last message."                
             }
-        } 
-        return true
+        }         
     }
 }
