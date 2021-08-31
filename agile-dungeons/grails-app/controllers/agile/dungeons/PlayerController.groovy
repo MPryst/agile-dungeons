@@ -4,10 +4,14 @@ class PlayerController {
 
     def characterService
     def playerService
-    def index(String username) {
-        def player = playerService.list().find({p -> p.username == username})
-        def chars = characterService.list()        
+    def messageService
 
+    def player
+    def messages
+    def index(String username) {
+        player = playerService.list().find({p -> p.username == username})
+        def chars = characterService.list()        
+        messages = messageService.list().findAll({m -> m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
         if (!player){
             response.status = 404
             render "Player not found"
@@ -16,6 +20,7 @@ class PlayerController {
             username: username,
             characterName: player.character.name,
             characters: chars,
+            messages: messages
         ]
     }
 

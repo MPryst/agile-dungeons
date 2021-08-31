@@ -20,39 +20,30 @@
 
 <h4 class="display-4">Mensajes</h4>
 <div class="container">
-  <div class="row">
+<g:each in="${messages}">
+<div class="row">
     <div class="col-md-2">
-      <span style="color: green; font-weight:bold">DM →</span -><span style="color: orange; font-weight:bold"> Neisseria </span>
+      <span style="color: green; font-weight:bold">${it.emisor?.name} →</span -><span style="color: orange; font-weight:bold"> ${it.receptor?.name} </span>
     </div>
     <div class="col-md-9">
-      Sentis hambre... (Fatiga LVL 1)
+      ${it.content}      
     </div>
     <div class="col-md-1">
-      Estado
-    </div>
-  </div> 
-  <div class="row">
-    <div class="col-md-2">
-      DM -> Neisseria
-    </div>
-    <div class="col-md-9">
-      Sentis hambre...
-    </div>
-    <div class="col-md-1">
-      Estado
+    ${it.approved}      
     </div>
   </div>   
+</g:each>
 </div>
 <hr>
 <br>
 
-<h4 class="display-4">Mensajes recibidos</h4>
+<h4 class="display-4">Enviar mensaje</h4>
 <g:form controller="Player" action="message">
 <div class="container">
   <div class="row">
     <div class="col-md-6">
         <label for="username">Enviar mensaje</label>    
-        <g:textField class="form-control" name="message" id="message" placeholder="Ingrese su nombre de usuario..."/>
+        <g:textField class="form-control" name="message" id="message" placeholder="¿Qué quiere decirle?"/>
     </div>
     <div class="col-md-4">
         <label for="username">Destinatario</label>
