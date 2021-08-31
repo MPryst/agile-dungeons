@@ -5,13 +5,14 @@ class PlayerController {
     def characterService
     def playerService
     def messageService
+    def playerMessagingService
 
     def player
     def messagesList
     def index(String username) {
         player = playerService.list().find({p -> p.username == username})
         def chars = characterService.list()        
-        messagesList = messageService.list().findAll({m -> m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
+        messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
         if (!player){
             response.status = 404
             render "Player not found"
@@ -33,10 +34,23 @@ class PlayerController {
     }
 
     def message(String message, String id) {
-        render "Querés decirle '${message}' al character de id '${id}'"
+        try {
+            playerMessagingService.message(player.id, id as Long, message)
+            redirect(controller: "Player", action: "index", params: [username: player.username])
+        } catch (Exception e) {
+            response.status = 400
+            render "${e.message}"
+        }
     }
 
     def action(String actionMessage) {
-        render "Querés pedirle '${actionMessage}' al DM"
+        try {
+            playerMessagingService.askGM(player.id, actionMessage)
+            redirect(controller: "Player", action: "index", params: [username: player.username])
+        } catch (Exception e) {
+            response.status = 400
+            render "${e.message}"
+        }
+        
     }
 }
