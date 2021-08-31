@@ -10,7 +10,7 @@ class GameMasterService {
 
     def sendMessage(Character receptor, String message) {
         if (!message || !receptor){
-            throw new Exception("No se puede enviar el mensae. Datos invalidos.")
+            throw new Exception("No se puede enviar el mensae. Datos inválidos.")
         }
 
         def newMessage = new Message(
@@ -25,7 +25,7 @@ class GameMasterService {
 
     def sendMessage(CharacterTypes charType, String message) {
         if (!message || !charType){
-            throw new Exception("No se puede enviar el mensae. Datos invalidos.")
+            throw new Exception("No se puede enviar el mensae. Datos inválidos.")
         }
         def charsInTheGroup
         switch(charType){
