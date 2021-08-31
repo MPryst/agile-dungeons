@@ -15,7 +15,7 @@ class PlayerController {
         messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
         if (!player){
             response.status = 404
-            render "Player not found"
+            render "Jugador no encontrado"
         }
         [
             username: username,
