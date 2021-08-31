@@ -63,6 +63,9 @@ class PlayerMessagingService {
     }
 
     def validateMessage(Long sourceCharacterId, String message){
+        if (!message){
+            throw new Exception("El mensaje no puede ser vacío");
+        }
         def latests = messageService.list().findAll({m -> m.emisor != null && m.emisor.id == sourceCharacterId}).sort{it.date}
         latests.reverse(true)        
         
