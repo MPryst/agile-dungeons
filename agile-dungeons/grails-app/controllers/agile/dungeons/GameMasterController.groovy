@@ -4,6 +4,7 @@ class GameMasterController {
 
     def characterService
     def messageService
+    def gameMasterService
 
     def message
     def sentMessages
@@ -39,26 +40,19 @@ class GameMasterController {
         render "cancel ${idMessage}"
     }
 
-    def message(String message, String id) {
-        def receptorCharacter = characterService.get(id)
-        if (!message || !receptorCharacter){
+    def message(String message, String id) {        
+        try {
+            def receptorCharacter = characterService.get(id)
+            gameMasterService.sendMessage(receptorCharacter, message)        
+            redirect(controller: "GameMaster", action: "index", params: [created: true])        
+        }catch (Exception e) {
             response.status = 400
-            render "Bad request"
+            render "${e.message}"
         }
-
-        def newMessage = new Message(
-            date: new Date(),
-            emisor: null,
-            receptor: receptorCharacter,
-            approved: true,
-            content: message
-        )
-        messageService.save(newMessage)
-        redirect(controller: "GameMaster", action: "index", params: [created: true])        
     }
 
     def groupMessage(String message, String groupDescripion) {
-        def charType = CharacterTypes.values().find({x -> x.description == groupDescripion})
+        def charType = CharacterTypes.values().find({x -> x.description == groupDescripion})        
         render "Querés decirle '${message}' al grupo de tipo '${charType.getValue()}'"
     }
 
