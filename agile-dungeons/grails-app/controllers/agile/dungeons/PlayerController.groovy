@@ -11,14 +11,13 @@ class PlayerController {
     def messagesList
     def index(String username) {
         player = playerService.list().find({p -> p.username == username})
-        def chars = characterService.list().findAll({p -> p.id != player.character.id})        
-        messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.id || (m.receptor?.id == player.id && m.approved )})
-        
         if (!player){
             response.status = 404
             render "Jugador no encontrado"
         }
         
+        def chars = characterService.list().findAll({p -> p.id != player.character.id})        
+        messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.character.id || (m.receptor?.id == player.character.id && m.approved )})        
         [
             username: username,
             characterName: player.character.name,
@@ -38,7 +37,7 @@ class PlayerController {
 
     def message(String message, String id) {
         try {
-            playerMessagingService.message(player.id, id as Long, message)
+            playerMessagingService.message(player.character.id, id as Long, message)
             redirect(controller: "Player", action: "index", params: [username: player.username])
         } catch (Exception e) {
             response.status = 400
@@ -48,7 +47,7 @@ class PlayerController {
 
     def action(String actionMessage) {
         try {
-            playerMessagingService.askGM(player.id, actionMessage)
+            playerMessagingService.askGM(player.character.id, actionMessage)
             redirect(controller: "Player", action: "index", params: [username: player.username])
         } catch (Exception e) {
             response.status = 400
