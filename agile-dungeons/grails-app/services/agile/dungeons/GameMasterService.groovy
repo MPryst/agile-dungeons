@@ -10,7 +10,7 @@ class GameMasterService {
 
     def sendMessage(Character receptor, String message) {
         if (!message || !receptor){
-            throw new Exception("No se puede enviar el mensae. Datos inválidos.")
+            throw new Exception("No se puede enviar el mensaje. Datos inválidos.")
         }
 
         def newMessage = new Message(
@@ -25,7 +25,7 @@ class GameMasterService {
 
     def sendMessage(CharacterTypes charType, String message) {
         if (!message || !charType){
-            throw new Exception("No se puede enviar el mensae. Datos inválidos.")
+            throw new Exception("No se puede enviar el mensaje. Datos inválidos.")
         }
         def charsInTheGroup
         switch(charType){
@@ -42,7 +42,7 @@ class GameMasterService {
                 charsInTheGroup = characterService.list().findAll({c -> c.vision == "Regularvision" && c.awake})
                 break;
             default :
-                throw new Exception("Seleccion de personajes inválida.")
+                throw new Exception("Selección de personajes inválida.")
                 brak;
         }
 
