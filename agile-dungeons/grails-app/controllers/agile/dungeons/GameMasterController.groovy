@@ -10,7 +10,7 @@ class GameMasterController {
     def sentMessages
     def index(Boolean created) {
         message = messageService.list(sort:"date").find({m -> m.approved == null})
-        sentMessages = messageService.list().findAll({m -> m.emisor == null})
+        sentMessages = messageService.list().findAll({m -> m.approved != null})
     
         [
             created: created,
@@ -24,8 +24,11 @@ class GameMasterController {
                 approved: message.approved == null ? "Pendiente..." : message.approved ? "Aprobado" : "Rechazado",
             ],
             sentMessages: sentMessages.collect({m -> [                                
-                receptor: m.receptor?.name,
+                emisor: m.emisor ? m.emisor.name : "GM",
+                receptor: m.receptor ? m.receptor.name : "GM",
                 content: m.content,
+                approved: m.approved == null ? "Pendiente..." : m.approved ? "Aprobado" : "Rechazado",
+                color: m.approved == null ? "orange" : m.approved ? "green" : "red",
              ]
             }),
         ]
