@@ -3,12 +3,12 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<!---
+
 <script>
   $(document).ready(function(){
     setTimeout(function(){ location.reload(); }, 10000);
   });
-  -->
+  
 </script>
 <div class="container">
 <nav aria-label="breadcrumb">
@@ -122,6 +122,38 @@
 </div>  
 </g:form>
 <hr>
+
+<h4 class="display-4">Personajes inconscientes</h4>
+  <div class="row">
+  <g:each in="${charactersUnconscious}">
+    <g:form class="form-inline" controller="gameMaster" action="awake">
+      <g:actionSubmit type="submit" class="form-control btn btn-warning" value="${it.name}: ${it.currentHitPoints}|${it.maximumHitPoints} HP" action="awake"/>
+      <g:textField class="form-control" name="idCharacter" id="${it.id}" value="${it.id}" hidden="true"/>
+      <label>&nbsp;</label>
+    </g:form>
+  </g:each>
+  </div>
+<hr>
+<h4 class="display-4">Personajes conscientes</h4>
+  <div class="container">
+  <g:each in="${charactersAwake}">    
+  <div class="form-inline">
+  <g:form controller="gameMaster" action="heal">          
+      <g:actionSubmit type="submit" class="form-control btn btn-success" disabled="${it.currentHitPoints== it.maximumHitPoints}" value="Heal" action="heal"/>
+      <g:textField class="form-control" name="idCharacter" id="${it.id}" value="${it.id}" hidden="true"/>
+      <label>&nbsp;</label>
+      <br>
+    </g:form>
+    <g:form  controller="gameMaster" action="sleep">          
+      <g:actionSubmit type="submit" class="form-control btn btn-success" value="${it.name}: ${it.currentHitPoints}|${it.maximumHitPoints} HP" action="sleep"/>
+      <g:textField class="form-control" name="idCharacter" id="${it.id}" value="${it.id}" hidden="true"/>
+      <label>&nbsp;</label>
+      <br>
+    </g:form>
+    </div>
+  </g:each>
+  </div>
+<br>
 <br>
 <hr>
 </body>

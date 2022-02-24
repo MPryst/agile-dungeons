@@ -10,12 +10,14 @@ class GameMasterController {
     def sentMessages
     def index(Boolean created) {
         message = messageService.list(sort:"date").find({m -> m.approved == null})
-        sentMessages = messageService.list().findAll({m -> m.approved != null})
+        sentMessages = messageService.list().findAll({m -> m.approved != null}).reverse(true)
     
         [
             created: created,
             username: session.username,            
             characters: characterService.list(),
+            charactersUnconscious: characterService.list().findAll({c -> !c.awake}),
+            charactersAwake: characterService.list().findAll({c -> c.awake}),
             characterTypes: CharacterTypes.values(),
             message: !message ? null : [
                 emisor: message.emisor ? message.emisor.name : "GM",
@@ -46,14 +48,50 @@ class GameMasterController {
     }    
 
     def message(String message, String id) {        
-        try {
-            def receptorCharacter = characterService.get(id)
+        def receptorCharacter = characterService.get(id)
+        try {            
             gameMasterService.sendMessage(receptorCharacter, message)        
             redirect(controller: "GameMaster", action: "index", params: [created: true])        
         }catch (Exception e) {
             response.status = 400
             render "${e.message}"
         }
+    }
+
+    def awake(Long idCharacter){
+        def character = characterService.get(idCharacter)        
+        try {
+            gameMasterService.sendMessage(character, "Te despertaste!")        
+            gameMasterService.awake(character)
+            redirect(controller: "GameMaster", action: "index")
+        } catch (Exception e) {
+            response.status = 400
+            render "${e.message}"
+        }
+    }
+
+    def sleep(Long idCharacter){
+        def character = characterService.get(idCharacter)
+        try {
+            gameMasterService.sendMessage(character, "Estas inconsciente")        
+            gameMasterService.sleep(character)
+            redirect(controller: "GameMaster", action: "index")
+        } catch (Exception e) {
+            response.status = 400
+            render "${e.message}"
+        }
+    }
+
+    def heal(Long idCharacter){
+        def character = characterService.get(idCharacter)
+        try {
+            gameMasterService.sendMessage(character, "Se restablecieron tus Hit Points")        
+            gameMasterService.heal(character)
+            redirect(controller: "GameMaster", action: "index")
+        } catch (Exception e) {
+            response.status = 400
+            render "${e.message}"
+        }            
     }
 
     def groupMessage(String message, String groupDescripion) {

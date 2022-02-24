@@ -1,46 +1,50 @@
 package agile.dungeons
 
-class BootStrap {
+class BootStrap {    
     
     def init = { servletContext ->    
-        Character tako = new Character(
-            id: 1,
-            name: "Takotsubo",            
-            size: "Medium",
-            vision: "Darkvision",
-            awake: true,            
-            perception: 16,)
+        Character tako = new Character(            
+             "Takotsubo",            
+             "Medium",
+             "Darkvision",
+             true,            
+             16,
+             38,
+             20,)
         .save()
 
-        Character cobalt = new Character(
-            id: 2,
-            name: "Cobalt",            
-            size: "Medium",
-            vision: "Darkvision",
-            awake: true,
-            perception: 12,)
+        Character cobalt = new Character(            
+             "Cobalt",            
+             "Medium",
+             "Darkvision",
+             true,
+             12,
+             49,
+             49,)
         .save()
 
-        Character logos = new Character(
-            id: 3,
-            name: "Logos",            
-            size: "Medium",
-            vision: "Regularvision",
-            awake: false,
-            perception: 11,)
+        Character logos = new Character(            
+             "Logos",            
+             "Medium",
+             "Regularvision",
+             false,
+             11,
+             44,
+             0)
         .save()
 
         Character neisseria = new Character(
-            id: 4,
-            name: "Neisseria",            
-            size: "Small",
-            vision: "Regularvision",
-            awake: true,
-            perception: 10,)
+             "Neisseria",            
+             "Small",
+             "Regularvision",
+             true,
+             10,
+             33,
+             28,)
         .save()
 
         Player juli = new Player(username: "Juli", character: tako).save()                
-        Player andres = new Player(username: "Andrés", character: logos).save()   
+        Player andres = new Player(username: "Andres", character: logos).save()   
         Player matias = new Player(username: "Matias", character: cobalt).save()     
         Player caro = new Player(username: "Caro", character: neisseria).save()
         

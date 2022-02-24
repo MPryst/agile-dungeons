@@ -9,17 +9,7 @@ class GameMasterService {
     def characterService
 
     def sendMessage(Character receptor, String message) {
-        if (!message || !receptor){
-            throw new Exception("No se puede enviar el mensaje. Datos inválidos.")
-        }
-
-        def newMessage = new Message(
-            date: new Date(),
-            emisor: null,
-            receptor: receptor,
-            approved: true,
-            content: message
-        )
+        def newMessage = new Message(receptor, message)
         messageService.save(newMessage)
     }
 
@@ -43,7 +33,7 @@ class GameMasterService {
                 break;
             default :
                 throw new Exception("Selección de personajes inválida.")
-                brak;
+                break;
         }
 
         charsInTheGroup.each {
@@ -51,13 +41,28 @@ class GameMasterService {
         }        
     }
 
-    def approve(Message message){
-        message.approved = true
+    def approve(Message message) {
+        message.setApproved(true)
         messageService.save(message)
     }
 
-    def reject(Message message){
-        message.approved = false
+    def reject(Message message) {
+        message.setApproved(false)
         messageService.save(message)
+    }
+
+    def awake(Character character) {
+        character.awake = true;
+        characterService.save(character)
+    }
+
+    def sleep(Character character) {
+        character.awake = false;
+        characterService.save(character)
+    }
+
+    def heal(Character character) {
+        character.currentHitPoints = character.maximumHitPoints;
+        characterService.save(character)
     }
 }

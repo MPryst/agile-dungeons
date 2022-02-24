@@ -13,12 +13,14 @@ class PlayerController {
         player = playerService.list().find({p -> p.username == username})
         if (!player){
             response.status = 404
-            render "Jugador no encontrado"
+            render "Jugador ${username} no encontrado"
         }
         
         def chars = characterService.list().findAll({p -> p.id != player.character.id})        
-        messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.character.id || (m.receptor?.id == player.character.id && m.approved )})        
+        messagesList = messageService.list().findAll({m -> m.emisor != null && m.emisor?.id == player.character.id || (m.receptor?.id == player.character.id && m.approved )}).reverse(true)
         [
+            maximumHitPoints: player.character.maximumHitPoints,
+            currentHitPoints: player.character.currentHitPoints,
             username: username,
             characterName: player.character.name,
             awake: player.character.awake,
